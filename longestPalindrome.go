@@ -2,12 +2,13 @@ package main
 
 import "fmt"
 
-func reverse(s string) string {
-	r := []rune(s)
-	for i, j := 0, len(r)-1; i < len(r)/2; i, j = i+1, j-1 {
-		r[i], r[j] = r[j], r[i]
+func palindrom(s string) bool {
+	for i, j := 0, len(s)-1; i <= j; i, j = i+1, j-1 {
+		if s[i] != s[j] {
+			return false
+		}
 	}
-	return string(r)
+	return true
 }
 func longestPalindrome(s string) string {
 	if len(s) <= 1 {
@@ -17,15 +18,15 @@ func longestPalindrome(s string) string {
 	for i := 0; i < len(s); i++ {
 		for j := 0; j <= i && i+j < len(s); j++ {
 			if i-j >= 0 {
-				tmps := string(s[i-j : i+j+1])
-				if tmps == reverse(tmps) && len(tmps) > len(pali_str) {
+				tmps := s[i-j : i+j+1]
+				if palindrom(tmps) && len(tmps) > len(pali_str) {
 					pali_str = tmps
 				}
 			}
 			if i-j-1 >= 0 {
-				tmps2 := string(s[i-j-1 : i+j+1])
+				tmps2 := s[i-j-1 : i+j+1]
 
-				if tmps2 == reverse(tmps2) && len(tmps2) > len(pali_str) {
+				if palindrom(tmps2) && len(tmps2) > len(pali_str) {
 					pali_str = tmps2
 				}
 			}
